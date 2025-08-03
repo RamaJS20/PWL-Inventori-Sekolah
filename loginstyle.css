@@ -1,0 +1,256 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+:root {
+    --primary-color: #f7a800; /* Warna kuning dari tombol login */
+    --secondary-color: #2b3954; /* Warna background panel kanan */
+    --dark-blue: #1a2233; /* Warna teks gelap */
+    --light-gray: #d1d5db; /* Warna placeholder dan border */
+    --white-color: #ffffff;
+    --text-color: #333;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background-color: #f0f2f5;
+    display: flex;
+    margin: 0;
+    padding: 0;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.login-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    box-shadow: 0 4px 50px rgba(0, 0, 0, 0.1);
+}
+
+/* Bagian Kiri: Informasi Sekolah */
+.left-panel {
+    width: 65%;
+    position: relative;
+    color: var(--white-color);
+    padding: 60px 80px;
+    justify-content: space-between;
+    display: flex;
+    background-image: url('test.png'); /* Ganti dengan path gambar Anda */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.left-panel::before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6); /* Overlay hitam transparan */
+    z-index: 1;
+}
+
+.left-panel .content {
+    position: relative;
+    margin-top: 10rem;
+    margin-left: 20rem;
+    z-index: 2;
+    max-width: 600px;
+}
+
+.left-panel h1 {
+    font-size: 48px;
+    font-weight: 800;
+    margin-bottom: 5px;
+    line-height: 1.1;
+}
+
+.left-panel .subtitle {
+    display: inline-block;
+    background-color: var(--primary-color);
+    color: var(--dark-blue);
+    padding: 5px 15px;
+    font-weight: 600;
+    font-size: 14px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+.left-panel .description {
+    font-weight: 300;
+    line-height: 1.6;
+    margin-bottom: 40px;
+}
+
+.left-panel .info-section h3 {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.left-panel .contact-info {
+    display: flex;
+    gap: 30px;
+}
+
+.left-panel .contact-info span {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+}
+
+.left-panel .contact-info i {
+    margin-right: 8px;
+    font-size: 16px;
+}
+
+.student-image {
+    position: absolute;
+    bottom: 0;
+    left: 100px; /* Atur posisi agar tidak terlalu mepet ke kiri */
+    height: 70%;
+    object-fit: contain;
+    z-index: 3;
+}
+
+
+/* Bagian Kanan: Form Login */
+.right-panel {
+    width: 35%;
+    background-color: var(--secondary-color);
+    color: var(--white-color);
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.logo-container {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+}
+
+.logo {
+    width: 80px;
+    height: auto;
+}
+
+.login-form-container {
+    width: 100%;
+    max-width: 350px;
+    text-align: center;
+}
+
+.login-form-container h2 {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+.error-message {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    font-size: 14px;
+}
+
+.input-group {
+    display: flex;
+    align-items: center;
+    background-color: var(--dark-blue);
+    border-radius: 5px;
+    margin-bottom: 15px;
+    padding: 10px 15px;
+}
+
+.input-group i {
+    color: var(--light-gray);
+    margin-right: 10px;
+}
+
+.input-group input {
+    flex-grow: 1;
+    background: none;
+    border: none;
+    outline: none;
+    color: var(--white-color);
+    font-size: 16px;
+}
+
+.input-group input::placeholder {
+    color: var(--light-gray);
+}
+
+.form-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
+    margin-bottom: 25px;
+}
+
+.form-options label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.form-options input[type="checkbox"] {
+    margin-right: 8px;
+}
+
+.forgot-password {
+    color: var(--light-gray);
+    text-decoration: none;
+}
+
+.forgot-password:hover {
+    text-decoration: underline;
+}
+
+.login-button {
+    width: 100%;
+    background-color: var(--primary-color);
+    color: var(--dark-blue);
+    border: none;
+    padding: 12px;
+    border-radius: 5px;
+    font-size: 18px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.login-button:hover {
+    background-color: #e69d00;
+}
+
+.signup-link {
+    margin-top: 25px;
+    font-size: 14px;
+    color: var(--light-gray);
+}
+
+.signup-link a {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.signup-link a:hover {
+    text-decoration: underline;
+}
