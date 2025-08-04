@@ -61,10 +61,8 @@ $tabel_inventaris = [
                         <li class="menu-item dropdown">
                         <a href="#"><i class="fas fa-database"></i>Master Data <i class="fas fa-chevron-down dropdown-arrow"></i></a>
                         <ul class="submenu">
-                            <li><a href="#">Nama Barang</a></li>
-                            <li><a href="#">Nama Ruangan</a></li>
-                            <li><a href="#">Satuan</a></li>
-                            <li><a href="#">Status</a></li>
+                            <li><a href="summary.php">Summary Barang</a></li>
+                            <li><a href="#">Database Barang</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -74,16 +72,19 @@ $tabel_inventaris = [
                     <li class="menu-item dropdown">
                         <a href="#"><i class="fas fa-couch"></i>Sarana Prasarana <i class="fas fa-chevron-down dropdown-arrow"></i></a>
                         <ul class="submenu">
-                            <li><a href="#">Data Barang</a></li>
                             <li><a href="#">Barang Masuk</a></li>
                             <li><a href="#">Barang Keluar</a></li>
-                    </li>
+                            <li><a href="#">Barang Rusak</a></li>
+                        </li>
                 </ul>
                 <div class="menu-separator"></div>
                 <h3>OTHER</h3>
                 <ul class="main-menu">
                     <li class="menu-item">
                         <a href="#"><i class="fas fa-user-friends"></i>User</a>
+                    </li>
+                    <li class="menu-item">
+                        <a href="#"><i class="fa-solid fa-school"></i>Tentang Sekolah</a>
                     </li>
                     <li class="menu-item">
                         <a href="#"><i class="fas fa-file-alt"></i>Report</a>
@@ -99,7 +100,7 @@ $tabel_inventaris = [
         <main class="main-content">
             <header class="top-bar">
                 <div class="top-bar-left">
-                    <span class="breadcrumb">DASHBOARD ></span>
+                    <span class="breadcrumb">DASHBOARD</span>
                 </div>
                 <div class="top-bar-right">
                     <a href="#" class="icon-link"><i class="fas fa-bell"></i></a>
@@ -107,6 +108,7 @@ $tabel_inventaris = [
                     <div class="user-profile">
                         <span>Renaldi</span>
                         <img src="logo_user.png" alt="User Profile">
+                        
                     </div>
                 </div>
             </header>
