@@ -24,7 +24,7 @@
     </style>
 </head>
 <body>
-    <h1>Summary Barang</h1>
+    <h1>Database Barang</h1>
 
     <form method="GET" action="">
         <input type="text" name="cari" placeholder="Cari ID / Nama Barang"
@@ -59,6 +59,7 @@
                 <th>Nama Barang</th>
                 <th>Deskripsi</th>
                 <th>Satuan</th>
+                <th>Aksi</th>
               </tr>";
 
         while ($row = $data->fetch_assoc()) {
@@ -67,6 +68,7 @@
                     <td>{$row['nama_barang']}</td>
                     <td>{$row['deskripsi']}</td>
                     <td>{$row['satuan_unit']}</td>
+                    <td class='aksi'><a href='#'>Edit</a> | <a href='#'>Hapus</a></td>
                   </tr>";
         }
 
