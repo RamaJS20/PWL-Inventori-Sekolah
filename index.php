@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Inventory Sekolah</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
@@ -62,7 +62,7 @@ $tabel_inventaris = [
                         <a href="#"><i class="fas fa-database"></i>Master Data <i class="fas fa-chevron-down dropdown-arrow"></i></a>
                         <ul class="submenu">
                             <li><a href="summary.php">Summary Barang</a></li>
-                            <li><a href="#">Database Barang</a></li>
+                            <li><a href="database.php">Database Barang</a></li>
                         </ul>
                     </li>
                 </ul>
