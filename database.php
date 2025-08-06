@@ -68,7 +68,7 @@
                     <td>{$row['nama_barang']}</td>
                     <td>{$row['deskripsi']}</td>
                     <td>{$row['satuan_unit']}</td>
-                    <td class='aksi'><a href='#'>Edit</a> | <a href='#'>Hapus</a></td>
+                    
                   </tr>";
         }
 
