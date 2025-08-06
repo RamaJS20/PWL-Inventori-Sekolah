@@ -24,7 +24,7 @@
     </style>
 </head>
 <body>
-    <h1>Summary Page</h1>
+    <h1>Record Aktivitas</h1>
 
     <form method="GET" action="">
         <input type="text" name="cari" placeholder="Cari ID Barang / Aksi / PIC"

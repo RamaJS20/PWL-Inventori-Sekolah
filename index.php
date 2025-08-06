@@ -61,7 +61,7 @@ $tabel_inventaris = [
                         <li class="menu-item dropdown">
                         <a href="#"><i class="fas fa-database"></i>Master Data <i class="fas fa-chevron-down dropdown-arrow"></i></a>
                         <ul class="submenu">
-                            <li><a href="summary.php">Summary Barang</a></li>
+                            <li><a href="record.php">Record Aktivitas</a></li>
                             <li><a href="database.php">Database Barang</a></li>
                         </ul>
                     </li>
@@ -72,9 +72,8 @@ $tabel_inventaris = [
                     <li class="menu-item dropdown">
                         <a href="#"><i class="fas fa-couch"></i>Sarana Prasarana <i class="fas fa-chevron-down dropdown-arrow"></i></a>
                         <ul class="submenu">
-                            <li><a href="#">Barang Masuk</a></li>
-                            <li><a href="#">Barang Keluar</a></li>
-                            <li><a href="#">Barang Rusak</a></li>
+                            <li><a href="inbound.php">Barang Masuk</a></li>
+                            <li><a href="outbound.php">Barang Keluar</a></li>
                         </li>
                 </ul>
                 <div class="menu-separator"></div>
