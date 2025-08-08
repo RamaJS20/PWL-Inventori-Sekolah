@@ -1,33 +1,36 @@
 <?php
-// Mulai sesi
 session_start();
+include 'koneksi.php';
 
 $error = '';
 
-// Cek apakah form sudah disubmit
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Ambil data dari form
     $username = $_POST['username'];
     $password = $_POST['password'];
 
-    // Contoh data login sederhana (dalam aplikasi nyata, ini harus dari database)
-    $valid_username = 'admin';
-    $valid_password = 'password123'; // INGAT: Jangan pernah simpan password tanpa di-hash!
+    // Ambil data user dari database
+    $stmt = $conn->prepare("SELECT password FROM user WHERE username = ?");
+    $stmt->bind_param("s", $username);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
-    // Cek kecocokan username dan password
-    if ($username === $valid_username && $password === $valid_password) {
-        // Jika login berhasil
-        $_SESSION['loggedin'] = true;
-        $_SESSION['username'] = $username;
-        
-        // Arahkan ke halaman dashboard (misal: index.php)
-        header('Location: index.php');
-        exit;
+    if ($row = $result->fetch_assoc()) {
+        $hashed_password = $row['password'];
+        // Verifikasi password dengan hash yang tersimpan
+        if (password_verify($password, $hashed_password)) {
+            $_SESSION['loggedin'] = true;
+            $_SESSION['username'] = $username;
+            header('Location: index.php');
+            exit;
+        } else {
+            $error = 'Username atau password salah!';
+        }
     } else {
-        // Jika login gagal
         $error = 'Username atau password salah!';
     }
+    $stmt->close();
 }
+$conn->close();
 ?>
 
 <!DOCTYPE html>
@@ -87,7 +90,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     </div>
                     <button type="submit" class="login-button">LOGIN</button>
                     <div class="signup-link">
-                        Don't have account ? <a href="#">Sign Up</a>
+                        Belum punya akun? <a href="register.php">Daftar sekarang</a>
                     </div>
                 </form>
             </div>
