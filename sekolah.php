@@ -2,7 +2,7 @@
 session_start();
 include 'koneksi.php';
 
-// Pastikan user sudah login, jika tidak, arahkan ke halaman login
+// Pastikan user sudah login
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     header('Location: login.php');
     exit;
@@ -17,20 +17,21 @@ $result_user = $stmt_user->get_result();
 $user_data = $result_user->fetch_assoc();
 $stmt_user->close();
 
-$tableName = 'barang';
+// Tutup koneksi setelah selesai
+$conn->close();
 
-// Buat query untuk mengambil data dari tabel barang
-if (isset($_GET['cari']) && $_GET['cari'] != '') {
-    $cari = $conn->real_escape_string($_GET['cari']);
-    $query = "SELECT * FROM $tableName 
-              WHERE id_barang LIKE '%$cari%' 
-                 OR nama_barang LIKE '%$cari%' 
-              ORDER BY id_barang ASC";
-} else {
-    $query = "SELECT * FROM $tableName ORDER BY id_barang ASC";
-}
+$team_members = [
+    ['name' => 'Rama.js', 'role' => 'Project Manager', 'icon' => 'fas fa-briefcase'],
+    ['name' => 'Caidenrev', 'role' => 'Lead Developer', 'icon' => 'fas fa-code'],
+    ['name' => 'Adimas', 'role' => 'UI/UX Designer', 'icon' => 'fas fa-paint-brush'],
+    ['name' => 'Amelia', 'role' => 'Backend Developer', 'icon' => 'fas fa-server'],
+    ['name' => 'Fadil', 'role' => 'Database Admin', 'icon' => 'fas fa-database'],
+    ['name' => 'Ghifari', 'role' => 'Frontend Developer', 'icon' => 'fas fa-laptop-code'],
+    ['name' => 'Imanuel', 'role' => 'Fullstack Developer', 'icon' => 'fas fa-check-double'],
+    ['name' => 'Azima', 'role' => 'SQL Key', 'icon' => 'fas fa-pen-nib'],
+    ['name' => 'Nadim', 'role' => 'System Analyst', 'icon' => 'fas fa-chart-line'],
+];
 
-$data = $conn->query($query);
 ?>
 
 <!DOCTYPE html>
@@ -38,10 +39,9 @@ $data = $conn->query($query);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Database Barang</title>
+    <title>Tentang Sekolah - STM 88 DKI Jakarta</title>
     <link rel="stylesheet" href="style/style.css">
-    <link rel="stylesheet" href="style/database-style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
     <div class="dashboard-container">
@@ -54,11 +54,11 @@ $data = $conn->query($query);
                     <li class="menu-item">
                         <a href="index.php"><i class="fas fa-home"></i>Dashboard</a>
                     </li>
-                    <li class="menu-item active dropdown">
+                    <li class="menu-item dropdown">
                         <a href="#"><i class="fas fa-database"></i>Master Data <i class="fas fa-chevron-down dropdown-arrow"></i></a>
                         <ul class="submenu">
                             <li><a href="record.php">Record Aktivitas</a></li>
-                            <li class="active"><a href="database.php">Database Barang</a></li>
+                            <li><a href="database.php">Database Barang</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -79,7 +79,7 @@ $data = $conn->query($query);
                     <li class="menu-item">
                         <a href="user.php"><i class="fas fa-user-friends"></i>User</a>
                     </li>
-                    <li class="menu-item">
+                    <li class="menu-item active">
                         <a href="sekolah.php"><i class="fa-solid fa-school"></i>Tentang Sekolah</a>
                     </li>
                     <li class="menu-item">
@@ -96,7 +96,7 @@ $data = $conn->query($query);
         <main class="main-content">
             <header class="top-bar">
                 <div class="top-bar-left">
-                    <span class="breadcrumb">MASTER DATA > Database Barang</span>
+                    <span class="breadcrumb">TENTANG SEKOLAH</span>
                 </div>
                 <div class="top-bar-right">
                     <a href="#" class="icon-link"><i class="fas fa-bell"></i></a>
@@ -110,54 +110,39 @@ $data = $conn->query($query);
             </header>
 
             <div class="content-wrapper">
-                <div class="data-table-container">
-                    <div class="header">
-                        <h1>Database Barang</h1>
-                        <form class="search-form" method="GET" action="">
-                            <input type="text" name="cari" placeholder="Cari ID / Nama Barang"
-                                value="<?= isset($_GET['cari']) ? htmlspecialchars($_GET['cari']) : '' ?>">
-                            <button type="submit">Cari</button>
-                        </form>
-                    </div>
-
-                    <?php 
-                    if ($data === false) {
-                        echo "<p class='not-found'>Error: " . $conn->error . "</p>";
-                    } elseif ($data->num_rows > 0) {
-                        echo "<table>";
-                        echo "<thead>";
-                        echo "<tr>
-                                <th>ID Barang</th>
-                                <th>Nama Barang</th>
-                                <th>Deskripsi</th>
-                                <th>Satuan</th>
-                                <th>Aksi</th>
-                            </tr>";
-                        echo "</thead>";
-                        echo "<tbody>";
-
-                        while ($row = $data->fetch_assoc()) {
-                            echo "<tr>
-                                    <td data-label='ID Barang'>{$row['id_barang']}</td>
-                                    <td data-label='Nama Barang'>{$row['nama_barang']}</td>
-                                    <td data-label='Deskripsi'>{$row['deskripsi']}</td>
-                                    <td data-label='Satuan'>{$row['satuan_unit']}</td>
-                                    <td data-label='Aksi' class='action-cell'>
-                                        <a href='edit.php?id={$row['id_barang']}' class='action-icon edit-icon' title='Edit'><i class='fas fa-edit'></i></a>
-                                        <a href='hapus.php?id={$row['id_barang']}' class='action-icon delete-icon' title='Hapus' onclick='return confirm(\"Apakah Anda yakin ingin menghapus data ini?\")'><i class='fas fa-trash-alt'></i></a>
-                                    </td>
-                                </tr>";
-                        }
-                        echo "</tbody>";
-                        echo "</table>";
-                    } else {
-                        echo "<p class='not-found'>Tidak ada data ditemukan.</p>";
-                    }
-
-                    // Tutup koneksi setelah selesai
-                    $conn->close();
-                    ?>
+                <div class="about-container">
+                    <h1 class="about-title">Sekilas Tentang STM 88 DKI Jakarta</h1>
+                    <p>
+                        STM 88 DKI Jakarta adalah salah satu institusi pendidikan kejuruan yang telah lama berdedikasi dalam mencetak generasi-generasi muda yang siap terjun ke dunia industri. Sejak didirikan, sekolah ini memiliki komitmen kuat untuk menyediakan pendidikan berbasis praktik yang relevan dengan perkembangan teknologi dan kebutuhan pasar kerja.
+                    </p>
+                    <p>
+                        Dengan kurikulum yang terus diperbarui dan fasilitas yang memadai, kami menawarkan program keahlian di berbagai bidang, mulai dari teknologi informasi, otomotif, hingga kelistrikan. Setiap program dirancang untuk membekali siswa dengan keterampilan teknis yang solid, etos kerja profesional, dan kemampuan beradaptasi.
+                    </p>
+                    <p>
+                        Selain fokus pada keunggulan akademik dan kejuruan, STM 88 juga menekankan pentingnya pembentukan karakter. Melalui berbagai kegiatan ekstrakurikuler dan program pengembangan diri, kami mendorong siswa untuk menjadi individu yang bertanggung jawab, kreatif, dan memiliki semangat gotong royong.
+                    </p>
+                    <p>
+                        Kami percaya bahwa pendidikan adalah investasi terbaik untuk masa depan. Oleh karena itu, STM 88 DKI Jakarta terus berupaya menjadi mitra terpercaya bagi para siswa dan orang tua dalam mewujudkan impian dan ambisi mereka.
+                    </p>
                 </div>
+                
+                <hr style="margin: 40px 0;">
+
+                <div class="team-development-section">
+                    <h2 class="team-title">Tim Pengembang Sistem Inventory</h2>
+                    <div class="team-members-grid">
+                        <?php foreach ($team_members as $member): ?>
+                        <div class="team-member-card">
+                            <div class="team-member-icon">
+                                <i class="<?= $member['icon'] ?>"></i>
+                            </div>
+                            <h3><?= $member['name'] ?></h3>
+                            <p><?= $member['role'] ?></p>
+                        </div>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+
             </div>
         </main>
     </div>

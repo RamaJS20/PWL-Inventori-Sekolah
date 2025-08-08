@@ -1,3 +1,64 @@
+<?php
+session_start();
+include 'koneksi.php';
+
+// Cek apakah user sudah login, jika tidak, arahkan ke halaman login
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+    header('Location: login.php');
+    exit;
+}
+
+// Ambil data user yang sedang login
+$username = $_SESSION['username'];
+$stmt_user = $conn->prepare("SELECT nama, profile_pic FROM user WHERE username = ?");
+$stmt_user->bind_param("s", $username);
+$stmt_user->execute();
+$result_user = $stmt_user->get_result();
+$user_data = $result_user->fetch_assoc();
+$stmt_user->close();
+
+// === MENGAMBIL DATA AKTIVITAS DARI DATABASE SECARA REAL-TIME ===
+// Buka kembali koneksi ke database karena sebelumnya sudah ditutup
+$conn = new mysqli("localhost", "root", "", "inventori_sekolah_88");
+if ($conn->connect_error) {
+    die("Koneksi gagal: " . $conn->connect_error);
+}
+
+// 1. Menghitung Total Barang Masuk dan Keluar
+$total_masuk_query = $conn->query("SELECT SUM(qty) as total_masuk FROM aksi_barang WHERE aksi='Masuk'");
+$total_masuk = $total_masuk_query->fetch_assoc()['total_masuk'] ?? 0;
+
+$total_keluar_query = $conn->query("SELECT SUM(qty) as total_keluar FROM aksi_barang WHERE aksi='Keluar'");
+$total_keluar = $total_keluar_query->fetch_assoc()['total_keluar'] ?? 0;
+
+// 2. Menghitung Sisa Barang
+$sisa_barang = $total_masuk - $total_keluar;
+
+// 3. Menghitung Total Nama Barang (unique items)
+$total_barang_query = $conn->query("SELECT COUNT(DISTINCT id_barang) as total_barang FROM barang");
+$total_barang = $total_barang_query->fetch_assoc()['total_barang'] ?? 0;
+
+// 4. Mengambil 5 aktivitas terbaru untuk tabel
+$tabel_inventaris_query = $conn->query("
+    SELECT 
+        a.id_barang, 
+        b.nama_barang, 
+        a.qty, 
+        a.satuan, 
+        a.aksi AS status_aksi, 
+        a.keterangan AS lokasi, 
+        a.pic
+    FROM aksi_barang a
+    JOIN barang b ON a.id_barang = b.id_barang
+    ORDER BY a.timestamp DESC
+    LIMIT 5
+");
+
+// Tutup koneksi
+$conn->close();
+
+?>
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -8,45 +69,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-
-<?php
-// PHP untuk mensimulasikan data
-$data_barang_elektronik = [
-    'total' => 253,
-    'tersedia' => 201,
-    'rusak' => 30
-];
-
-$data_barang_rumah_tangga = [
-    'total' => 70,
-    'tersedia' => 74, // Contoh data yang lebih besar dari total, perlu penyesuaian di data nyata
-    'rusak' => 23
-];
-
-$data_barang_pinjaman_aktif = [
-    'total' => 102,
-    'sudah_dikembalikan' => 80,
-    'belum_dikembalikan' => 22
-];
-
-$data_barang_rusak = [
-    'total' => 23,
-    'menunggu_perbaikan' => 16,
-    'proses_perbaikan' => 9
-];
-
-
-
-$tabel_inventaris = [
-    ['KR001', 'Kursi Siswa', 950, 'Unit', 'Tersedia', 'Gudang', 'Renaldi'],
-    ['KR001', 'Kursi Siswa', 950, 'Unit', 'Tersedia', 'Gudang', 'Renaldi'],
-    ['KR001', 'Kursi Siswa', 950, 'Unit', 'Tersedia', 'Gudang', 'Renaldi'],
-    ['KR001', 'Kursi Siswa', 950, 'Unit', 'Tersedia', 'Gudang', 'Renaldi'],
-    ['KR001', 'Kursi Siswa', 500, 'Unit', 'Tersedia', 'Gudang', 'Renaldi'],
-];
-
-?>
-
     <div class="dashboard-container">
         <aside class="sidebar">
             <div class="sidebar-header">
@@ -55,7 +77,7 @@ $tabel_inventaris = [
             <nav class="sidebar-nav">
                 <ul class="main-menu">
                     <li class="menu-item active">
-                        <a href="#"><i class="fas fa-home"></i>Dashboard</a>
+                        <a href="index.php"><i class="fas fa-home"></i>Dashboard</a>
                     </li>
                     <li class="menu-item">
                         <li class="menu-item dropdown">
@@ -80,10 +102,10 @@ $tabel_inventaris = [
                 <h3>OTHER</h3>
                 <ul class="main-menu">
                     <li class="menu-item">
-                        <a href="#"><i class="fas fa-user-friends"></i>User</a>
+                        <a href="user.php"><i class="fas fa-user-friends"></i>User</a>
                     </li>
                     <li class="menu-item">
-                        <a href="#"><i class="fa-solid fa-school"></i>Tentang Sekolah</a>
+                        <a href="sekolah.php"><i class="fa-solid fa-school"></i>Tentang Sekolah</a>
                     </li>
                     <li class="menu-item">
                         <a href="#"><i class="fas fa-file-alt"></i>Report</a>
@@ -103,11 +125,11 @@ $tabel_inventaris = [
                 </div>
                 <div class="top-bar-right">
                     <a href="#" class="icon-link"><i class="fas fa-bell"></i></a>
-                    <a href="#" class="icon-link"><i class="fas fa-cog"></i></a>
+                    <a href="profile.php" class="icon-link" title="Pengaturan Profil"><i class="fas fa-cog"></i></a>
                     <div class="user-profile">
-                        <span>Renaldi</span>
-                        <img src="logo_user.png" alt="User Profile">
-                        
+                        <span><?php echo htmlspecialchars($user_data['nama']); ?></span>
+                        <img src="assets/<?php echo htmlspecialchars($user_data['profile_pic']); ?>" alt="User Profile">
+                        <a href="logout.php" title="Logout" class="logout-link"><i class="fas fa-sign-out-alt"></i></a>
                     </div>
                 </div>
             </header>
@@ -116,101 +138,102 @@ $tabel_inventaris = [
                 <div class="summary-cards-container">
                     <div class="card">
                         <div class="card-header">
-                            <h4>Barang Elektronik</h4>
-                            <a href="#"><i class="fas fa-external-link-alt"></i></a>
+                            <h4>Total Barang</h4>
+                            <a href="database.php"><i class="fas fa-external-link-alt"></i></a>
                         </div>
                         <div class="card-body">
-                            <span class="card-number"><?php echo $data_barang_elektronik['total']; ?></span>
-                            <span class="card-unit">Unit</span>
+                            <span class="card-number"><?= $total_barang ?></span>
+                            <span class="card-unit">Jenis</span>
                             <ul>
-                                <li><i class="fas fa-circle active"></i>Barang Tersedia: <span><?php echo $data_barang_elektronik['tersedia']; ?></span></li>
-                                <li><i class="fas fa-circle danger"></i>Barang Rusak: <span><?php echo $data_barang_elektronik['rusak']; ?></span></li>
+                                <li><i class="fas fa-circle active"></i>Barang Masuk: <span><?= $total_masuk ?></span></li>
+                                <li><i class="fas fa-circle danger"></i>Barang Keluar: <span><?= $total_keluar ?></span></li>
                             </ul>
                         </div>
                     </div>
                     <div class="card">
                         <div class="card-header">
-                            <h4>Barang Rumah Tangga</h4>
-                            <a href="#"><i class="fas fa-external-link-alt"></i></a>
+                            <h4>Total Barang Masuk</h4>
+                            <a href="inbound.php"><i class="fas fa-external-link-alt"></i></a>
                         </div>
                         <div class="card-body">
-                            <span class="card-number"><?php echo $data_barang_rumah_tangga['total']; ?></span>
-                            <span class="card-unit">Item</span>
+                            <span class="card-number"><?= $total_masuk ?></span>
+                            <span class="card-unit">Unit</span>
                             <ul>
-                                <li><i class="fas fa-circle active"></i>Barang Tersedia: <span><?php echo $data_barang_rumah_tangga['tersedia']; ?></span></li>
-                                <li><i class="fas fa-circle danger"></i>Barang Rusak: <span><?php echo $data_barang_rumah_tangga['rusak']; ?></span></li>
+                                <li><i class="fas fa-circle active"></i>Total Qty: <span><?= $total_masuk ?></span></li>
+                                <li><i class="fas fa-circle warning"></i>Total Jenis: <span><?= $total_barang ?></span></li>
                             </ul>
                         </div>
                     </div>
                     <div class="card">
                         <div class="card-header">
-                            <h4>Barang Pinjaman Aktif</h4>
-                            <a href="#"><i class="fas fa-external-link-alt"></i></a>
+                            <h4>Total Barang Keluar</h4>
+                            <a href="outbound.php"><i class="fas fa-external-link-alt"></i></a>
                         </div>
                         <div class="card-body">
-                            <span class="card-number"><?php echo $data_barang_pinjaman_aktif['total']; ?></span>
+                            <span class="card-number"><?= $total_keluar ?></span>
                             <span class="card-unit">Unit</span>
                             <ul>
-                                <li><i class="fas fa-circle active"></i>Sudah dikembalikan: <span><?php echo $data_barang_pinjaman_aktif['sudah_dikembalikan']; ?></span></li>
-                                <li><i class="fas fa-circle danger"></i>Belum dikembalikan: <span><?php echo $data_barang_pinjaman_aktif['belum_dikembalikan']; ?></span></li>
+                                <li><i class="fas fa-circle active"></i>Total Qty: <span><?= $total_keluar ?></span></li>
+                                <li><i class="fas fa-circle warning"></i>Total Jenis: <span><?= $total_barang ?></span></li>
                             </ul>
                         </div>
                     </div>
                     <div class="card">
                         <div class="card-header">
-                            <h4>Barang Rusak</h4>
+                            <h4>Sisa Barang</h4>
                             <a href="#"><i class="fas fa-external-link-alt"></i></a>
                         </div>
                         <div class="card-body">
-                            <span class="card-number"><?php echo $data_barang_rusak['total']; ?></span>
+                            <span class="card-number"><?= $sisa_barang ?></span>
                             <span class="card-unit">Unit</span>
                             <ul>
-                                <li><i class="fas fa-circle warning"></i>Menunggu perbaikan: <span><?php echo $data_barang_rusak['menunggu_perbaikan']; ?></span></li>
-                                <li><i class="fas fa-circle primary"></i>Proses Perbaikan: <span><?php echo $data_barang_rusak['proses_perbaikan']; ?></span></li>
+                                <li><i class="fas fa-circle primary"></i>Stok Tersedia: <span><?= $sisa_barang ?></span></li>
                             </ul>
                         </div>
                     </div>
                 </div>
 
-                    
-
                 <div class="data-table-container">
                     <div class="table-header">
-                        <h4>Data Aktivitas Inventaris Sekolah</h4>
-                        <a href="#" class="filter-btn"><i class="fas fa-filter"></i></a>
+                        <h4>Aktivitas Terbaru</h4>
+                        <a href="record.php" class="filter-btn" title="Lihat semua"><i class="fas fa-list"></i></a>
                     </div>
                     <table>
                         <thead>
                             <tr>
-                                <th>NO</th>
                                 <th>ID BARANG</th>
                                 <th>NAMA BARANG</th>
                                 <th>QTY</th>
                                 <th>SATUAN</th>
-                                <th>STATUS</th>
-                                <th>LOKASI</th>
+                                <th>AKSI</th>
+                                <th>KETERANGAN</th>
                                 <th>PIC</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <?php 
-                            $no = 1;
-                            foreach ($tabel_inventaris as $row) : ?>
-                            <tr>
-                                <td><?php echo $no++; ?></td>
-                                <td><?php echo $row[0]; ?></td>
-                                <td><?php echo $row[1]; ?></td>
-                                <td><?php echo $row[2]; ?></td>
-                                <td><?php echo $row[3]; ?></td>
-                                <td class="status-cell"><span class="status-badge <?php echo strtolower($row[4]); ?>"><?php echo $row[4]; ?></span></td>
-                                <td><?php echo $row[5]; ?></td>
-                                <td><?php echo $row[6]; ?></td>
-                                </td>
-                            </tr>
-                            <?php endforeach; ?>
+                            <?php if ($tabel_inventaris_query->num_rows > 0): ?>
+                                <?php while ($row = $tabel_inventaris_query->fetch_assoc()): ?>
+                                    <tr>
+                                        <td><?= htmlspecialchars($row['id_barang']) ?></td>
+                                        <td><?= htmlspecialchars($row['nama_barang']) ?></td>
+                                        <td><?= htmlspecialchars($row['qty']) ?></td>
+                                        <td><?= htmlspecialchars($row['satuan']) ?></td>
+                                        <td class="status-cell">
+                                            <span class="status-badge <?= strtolower($row['status_aksi']) ?>">
+                                                <?= htmlspecialchars($row['status_aksi']) ?>
+                                            </span>
+                                        </td>
+                                        <td><?= htmlspecialchars($row['lokasi']) ?></td>
+                                        <td><?= htmlspecialchars($row['pic']) ?></td>
+                                    </tr>
+                                <?php endwhile; ?>
+                            <?php else: ?>
+                                <tr>
+                                    <td colspan="7">Tidak ada data aktivitas terbaru.</td>
+                                </tr>
+                            <?php endif; ?>
                         </tbody>
                     </table>
-                    </div>
                 </div>
             </div>
         </main>

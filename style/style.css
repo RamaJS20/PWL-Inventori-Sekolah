@@ -271,6 +271,700 @@ ul {
     margin-right: 5px;
 }
 
+/* Gaya untuk Bagian Team Development */
+.team-development-section {
+    padding: 20px;
+    background-color: var(--light-bg-color);
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    margin-top: 20px;
+}
+
+.team-title {
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 30px;
+    color: var(--dark-color);
+}
+
+.team-members-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 20px;
+    justify-items: center;
+}
+
+.team-member-card {
+    background-color: var(--white-color);
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.team-member-card:hover {
+    transform: translateY(-5px);
+}
+
+.team-member-icon {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background-color: var(--primary-color);
+    color: var(--white-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto 10px auto;
+    font-size: 3rem;
+}
+
+.team-member-card h3 {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.team-member-card p {
+    font-size: 14px;
+    color: var(--gray-color);
+}
+
+/* Gaya untuk halaman Tentang Sekolah */
+.about-container {
+    width: 90%;
+    height: 80%;
+    margin: 20px auto;
+    padding: 30px;
+    background-color: var(--white-color);
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.about-title {
+    font-size: 28px;
+    margin-bottom: 20px;
+    color: var(--primary-color);
+}
+
+.about-container p {
+    font-size: 16px;
+    line-height: 1.8;
+    margin-bottom: 15px;
+    color: var(--dark-color);
+    text-align: justify;
+}
+
+/* Gaya untuk Halaman Pengaturan Profil */
+.form-edit-container {
+    width: 100%;
+    max-width: 1200px;
+    padding: 30px;
+    background-color: var(--white-color);
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.form-edit-container h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.form-edit-container .message {
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    font-size: 14px;
+}
+
+.form-edit-container .message.error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+.form-edit-container .message.success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.form-group-profile {
+    margin-bottom: 20px;
+}
+
+.form-group-profile label {
+    display: block;
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+
+.form-group-profile input[type="text"],
+.form-group-profile input[type="email"],
+.form-group-profile input[type="password"],
+.form-group-profile input[type="file"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.form-group-profile small {
+    font-size: 12px;
+    color: var(--gray-color);
+    margin-top: 5px;
+}
+
+.current-profile-pic {
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.current-profile-pic img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--border-color);
+}
+
+.btn-action-group {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+}
+
+.btn-update,
+.btn-back {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.2s ease;
+    text-align: center;
+}
+
+.btn-update {
+    background-color: var(--primary-color);
+    color: var(--white-color);
+}
+
+.btn-update:hover {
+    background-color: #0b5ed7;
+}
+
+.btn-back {
+    background-color: var(--secondary-color);
+    color: var(--white-color);
+}
+
+.btn-back:hover {
+    background-color: #5a6268;
+}
+
+/* Responsif untuk Form Profil */
+@media (max-width: 600px) {
+    .form-edit-container {
+        padding: 20px;
+    }
+    .btn-action-group {
+        flex-direction: column;
+    }
+}
+/* Gaya untuk Upload Button */
+.upload-btn-wrapper {
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+    margin-bottom: 10px;
+}
+
+.btn-upload {
+    border: 2px solid var(--border-color);
+    color: var(--text-color);
+    background-color: var(--white-color);
+    padding: 8px 20px;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-upload:hover {
+    background-color: var(--secondary-bg);
+}
+
+.upload-btn-wrapper input[type="file"] {
+    font-size: 100px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
+}
+
+#file-chosen {
+    margin-left: 10px;
+    font-size: 14px;
+    color: var(--gray-color);
+}
+
+/* Gaya untuk Primary Button (Simpan Perubahan) */
+.btn-primary {
+    background-color: var(--primary-color);
+    color: var(--white-color);
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.2s ease;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn-primary:hover {
+    background-color: #0b5ed7;
+}
+
+/* Gaya untuk Secondary Button (Kembali) */
+.btn-secondary {
+    background-color: var(--secondary-color);
+    color: var(--white-color);
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.2s ease;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
+}
+
+/* Responsif untuk Tombol */
+@media (max-width: 600px) {
+    .btn-primary,
+    .btn-secondary {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+}/* Gaya untuk Upload Button */
+.upload-btn-wrapper {
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+    margin-bottom: 10px;
+}
+
+.btn-upload {
+    border: 2px solid var(--border-color);
+    color: var(--text-color);
+    background-color: var(--white-color);
+    padding: 8px 20px;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-upload:hover {
+    background-color: var(--secondary-bg);
+}
+
+.upload-btn-wrapper input[type="file"] {
+    font-size: 100px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
+}
+
+#file-chosen {
+    margin-left: 10px;
+    font-size: 14px;
+    color: var(--gray-color);
+}
+
+/* Gaya untuk Primary Button (Simpan Perubahan) */
+.btn-primary {
+    background-color: var(--primary-color);
+    color: var(--white-color);
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.2s ease;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn-primary:hover {
+    background-color: #0b5ed7;
+}
+
+/* Gaya untuk Secondary Button (Kembali) */
+.btn-secondary {
+    background-color: var(--secondary-color);
+    color: var(--white-color);
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.2s ease;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
+}
+
+/* Responsif untuk Tombol */
+@media (max-width: 600px) {
+    .btn-primary,
+    .btn-secondary {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+}/* Gaya untuk Upload Button */
+.upload-btn-wrapper {
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+    margin-bottom: 10px;
+}
+
+.btn-upload {
+    border: 2px solid var(--border-color);
+    color: var(--text-color);
+    background-color: var(--white-color);
+    padding: 8px 20px;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-upload:hover {
+    background-color: var(--secondary-bg);
+}
+
+.upload-btn-wrapper input[type="file"] {
+    font-size: 100px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
+}
+
+#file-chosen {
+    margin-left: 10px;
+    font-size: 14px;
+    color: var(--gray-color);
+}
+
+/* Gaya untuk Primary Button (Simpan Perubahan) */
+.btn-primary {
+    background-color: var(--primary-color);
+    color: var(--white-color);
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.2s ease;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn-primary:hover {
+    background-color: #0b5ed7;
+}
+
+/* Gaya untuk Secondary Button (Kembali) */
+.btn-secondary {
+    background-color: var(--secondary-color);
+    color: var(--white-color);
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.2s ease;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
+}
+
+/* Responsif untuk Tombol */
+@media (max-width: 600px) {
+    .btn-primary,
+    .btn-secondary {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+}/* Gaya untuk Upload Button */
+.upload-btn-wrapper {
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+    margin-bottom: 10px;
+}
+
+.btn-upload {
+    border: 2px solid var(--border-color);
+    color: var(--text-color);
+    background-color: var(--white-color);
+    padding: 8px 20px;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-upload:hover {
+    background-color: var(--secondary-bg);
+}
+
+.upload-btn-wrapper input[type="file"] {
+    font-size: 100px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
+}
+
+#file-chosen {
+    margin-left: 10px;
+    font-size: 14px;
+    color: var(--gray-color);
+}
+
+/* Gaya untuk Primary Button (Simpan Perubahan) */
+.btn-primary {
+    background-color: var(--primary-color);
+    color: var(--white-color);
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.2s ease;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn-primary:hover {
+    background-color: #0b5ed7;
+}
+
+/* Gaya untuk Secondary Button (Kembali) */
+.btn-secondary {
+    background-color: var(--secondary-color);
+    color: var(--white-color);
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.2s ease;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
+}
+
+/* Responsif untuk Tombol */
+@media (max-width: 600px) {
+    .btn-primary,
+    .btn-secondary {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+}/* Gaya untuk Upload Button */
+.upload-btn-wrapper {
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+    margin-bottom: 10px;
+}
+
+.btn-upload {
+    border: 2px solid var(--border-color);
+    color: var(--text-color);
+    background-color: var(--white-color);
+    padding: 8px 20px;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-upload:hover {
+    background-color: var(--secondary-bg);
+}
+
+.upload-btn-wrapper input[type="file"] {
+    font-size: 100px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
+}
+
+#file-chosen {
+    margin-left: 10px;
+    font-size: 14px;
+    color: var(--gray-color);
+}
+
+/* Gaya untuk Primary Button (Simpan Perubahan) */
+.btn-primary {
+    background-color: var(--primary-color);
+    color: var(--white-color);
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.2s ease;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn-primary:hover {
+    background-color: #0b5ed7;
+}
+
+/* Gaya untuk Secondary Button (Kembali) */
+.btn-secondary {
+    background-color: var(--secondary-color);
+    color: var(--white-color);
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.2s ease;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
+}
+
+/* Responsif untuk Tombol */
+@media (max-width: 600px) {
+    .btn-primary,
+    .btn-secondary {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+}/* Gaya untuk Upload Button */
+.upload-btn-wrapper {
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+    margin-bottom: 10px;
+}
+
+.btn-upload {
+    border: 2px solid var(--border-color);
+    color: var(--text-color);
+    background-color: var(--white-color);
+    padding: 8px 20px;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-upload:hover {
+    background-color: var(--secondary-bg);
+}
+
+.upload-btn-wrapper input[type="file"] {
+    font-size: 100px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
+}
+
+#file-chosen {
+    margin-left: 10px;
+    font-size: 14px;
+    color: var(--gray-color);
+}
+
+/* Gaya untuk Primary Button (Simpan Perubahan) */
+.btn-primary {
+    background-color: var(--primary-color);
+    color: var(--white-color);
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.2s ease;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn-primary:hover {
+    background-color: #0b5ed7;
+}
+
+/* Gaya untuk Secondary Button (Kembali) */
+.btn-secondary {
+    background-color: var(--secondary-color);
+    color: var(--white-color);
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.2s ease;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
+}
+
+/* Responsif untuk Tombol */
+@media (max-width: 600px) {
+    .btn-primary,
+    .btn-secondary {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+}
+
+
 /* Pie Chart (Simulasi) */
 .inventory-overview .chart-body {
     display: flex;

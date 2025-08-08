@@ -1,0 +1,41 @@
+/* Styling untuk halaman profile.php */
+.profile-card {
+    background-color: var(--white-color);
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    max-width: 800px;
+    margin: 10px auto;
+}
+
+.form-group-profile {
+    margin-bottom: 20px;
+}
+
+.form-group-profile label {
+    display: block;
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+
+.form-group-profile input[type="text"],
+.form-group-profile input[type="email"],
+.form-group-profile input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.current-profile-pic {
+    margin-top: 10px;
+}
+
+.current-profile-pic img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--border-color);
+}
