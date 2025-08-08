@@ -36,13 +36,14 @@ body {
 
 /* Bagian Kiri: Informasi Sekolah */
 .left-panel {
+    background-color: black;
     width: 65%;
     position: relative;
     color: var(--white-color);
     padding: 60px 80px;
     justify-content: space-between;
     display: flex;
-    background-image: url('test.png'); /* Ganti dengan path gambar Anda */
+    background-image: url('../assets/test.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;

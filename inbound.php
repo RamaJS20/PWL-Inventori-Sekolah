@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $stmt = $conn->prepare("INSERT INTO aksi_barang (id_aksi, id_barang, qty, satuan, harga, total_harga, aksi, keterangan, pic) 
                             VALUES (?, ?, ?, ?, ?, ?, 'Masuk', ?, ?)");
-    $stmt->bind_param("ssississ", $id_aksi, $id_barang, $qty, $satuan, $harga, $total, $keterangan, $pic);
+    $stmt->bind_param("ssisiss", $id_aksi, $id_barang, $qty, $satuan, $harga, $total, $keterangan, $pic);
     $stmt->execute();
     $stmt->close();
 
@@ -58,77 +58,93 @@ $masuk = $conn->query("SELECT aksi.*, b.nama_barang FROM aksi_barang aksi
 <head>
     <meta charset="UTF-8">
     <title>Barang Masuk</title>
-    <style>
-        body { font-family: Arial, sans-serif; padding: 20px; }
-        form, table { max-width: 800px; margin-bottom: 30px; }
-        input, select, textarea { width: 100%; padding: 6px; margin: 5px 0; }
-        table { width: 100%; border-collapse: collapse; }
-        table th, table td { border: 1px solid #ddd; padding: 8px; text-align: left; }
-        th { background-color: #f0f0f0; }
-    </style>
+    <link rel="stylesheet" href="style/inbound-style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
 <body>
+    <div class="container">
+        <h2>Form Barang Masuk</h2>
+        <form method="POST" action="" class="form-inbound">
+            <div class="form-group">
+                <label for="id_aksi">ID Aksi</label>
+                <input type="text" name="id_aksi" id="id_aksi" value="<?= $id_aksi_baru ?>" readonly>
+            </div>
+            
+            <div class="form-group">
+                <label for="id_barang">Barang</label>
+                <select name="id_barang" id="id_barang" required>
+                    <option value="">-- Pilih Barang --</option>
+                    <?php while($row = $barang->fetch_assoc()): ?>
+                        <option value="<?= $row['id_barang'] ?>"><?= $row['id_barang'] ?> - <?= $row['nama_barang'] ?></option>
+                    <?php endwhile; ?>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="qty">Jumlah (Qty)</label>
+                <input type="number" name="qty" id="qty" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="satuan">Satuan</label>
+                <input type="text" name="satuan" id="satuan" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="harga">Harga</label>
+                <input type="number" name="harga" id="harga" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="keterangan">Keterangan</label>
+                <textarea name="keterangan" id="keterangan"></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="pic">PIC</label>
+                <input type="text" name="pic" id="pic" required>
+            </div>
+            
+            <button type="submit" class="btn-submit">Simpan</button>
+        </form>
 
-<h2>Form Barang Masuk</h2>
-<form method="POST" action="">
-    <label>ID Aksi</label>
-    <input type="text" name="id_aksi" value="<?= $id_aksi_baru ?>" readonly>
-
-    <label>Barang</label>
-    <select name="id_barang" required>
-        <option value="">-- Pilih Barang --</option>
-        <?php while($row = $barang->fetch_assoc()): ?>
-            <option value="<?= $row['id_barang'] ?>"><?= $row['id_barang'] ?> - <?= $row['nama_barang'] ?></option>
-        <?php endwhile; ?>
-    </select>
-
-    <label>Jumlah (Qty)</label>
-    <input type="number" name="qty" required>
-
-    <label>Satuan</label>
-    <input type="text" name="satuan" required>
-
-    <label>Harga</label>
-    <input type="number" name="harga" required>
-
-    <label>Keterangan</label>
-    <textarea name="keterangan"></textarea>
-
-    <label>PIC</label>
-    <input type="text" name="pic" required>
-
-    <button type="submit">Simpan</button>
-</form>
-
-<h2>Riwayat Barang Masuk</h2>
-<table>
-    <tr>
-        <th>ID Aksi</th>
-        <th>Tanggal</th>
-        <th>ID Barang</th>
-        <th>Nama Barang</th>
-        <th>Qty</th>
-        <th>Satuan</th>
-        <th>Harga</th>
-        <th>Total</th>
-        <th>PIC</th>
-        <th>Keterangan</th>
-    </tr>
-    <?php while($row = $masuk->fetch_assoc()): ?>
-    <tr>
-        <td><?= $row['id_aksi'] ?></td>
-        <td><?= $row['timestamp'] ?></td>
-        <td><?= $row['id_barang'] ?></td>
-        <td><?= $row['nama_barang'] ?></td>
-        <td><?= $row['qty'] ?></td>
-        <td><?= $row['satuan'] ?></td>
-        <td><?= number_format($row['harga']) ?></td>
-        <td><?= number_format($row['total_harga']) ?></td>
-        <td><?= $row['pic'] ?></td>
-        <td><?= $row['keterangan'] ?></td>
-    </tr>
-    <?php endwhile; ?>
-</table>
-
+        <h2>Riwayat Barang Masuk</h2>
+        <?php if ($masuk->num_rows > 0): ?>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID Aksi</th>
+                    <th>Tanggal</th>
+                    <th>ID Barang</th>
+                    <th>Nama Barang</th>
+                    <th>Qty</th>
+                    <th>Satuan</th>
+                    <th>Harga</th>
+                    <th>Total</th>
+                    <th>PIC</th>
+                    <th>Keterangan</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php while($row = $masuk->fetch_assoc()): ?>
+                <tr>
+                    <td data-label="ID Aksi"><?= $row['id_aksi'] ?></td>
+                    <td data-label="Tanggal"><?= $row['timestamp'] ?></td>
+                    <td data-label="ID Barang"><?= $row['id_barang'] ?></td>
+                    <td data-label="Nama Barang"><?= $row['nama_barang'] ?></td>
+                    <td data-label="Qty"><?= $row['qty'] ?></td>
+                    <td data-label="Satuan"><?= $row['satuan'] ?></td>
+                    <td data-label="Harga"><?= number_format($row['harga']) ?></td>
+                    <td data-label="Total"><?= number_format($row['total_harga']) ?></td>
+                    <td data-label="PIC"><?= $row['pic'] ?></td>
+                    <td data-label="Keterangan"><?= $row['keterangan'] ?></td>
+                </tr>
+                <?php endwhile; ?>
+            </tbody>
+        </table>
+        <?php else: ?>
+            <p class="not-found">Tidak ada riwayat barang masuk ditemukan.</p>
+        <?php endif; ?>
+    </div>
 </body>
 </html>

@@ -40,78 +40,110 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 ?>
 
-<h2>Form Barang Keluar</h2>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Barang Keluar</title>
+    <link rel="stylesheet" href="style/outbound-style.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Form Barang Keluar</h2>
 
-<form method="POST" action="">
-    <label>ID Aksi</label><br>
-    <input type="text" name="id_aksi" value="<?= $idAksiBaru ?>" readonly><br><br>
+        <form method="POST" action="" class="form-outbound">
+            <div class="form-group">
+                <label for="id_aksi">ID Aksi</label>
+                <input type="text" name="id_aksi" id="id_aksi" value="<?= $idAksiBaru ?>" readonly>
+            </div>
+            
+            <div class="form-group">
+                <label for="id_barang">ID Barang</label>
+                <select name="id_barang" id="id_barang" required>
+                    <option value="">-- Pilih Barang --</option>
+                    <?php
+                    $barang = $conn->query("SELECT * FROM barang");
+                    while ($row = $barang->fetch_assoc()) {
+                        echo "<option value='{$row['id_barang']}'>{$row['id_barang']} - {$row['nama_barang']}</option>";
+                    }
+                    ?>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="qty">Qty</label>
+                <input type="number" name="qty" id="qty" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="satuan">Satuan</label>
+                <input type="text" name="satuan" id="satuan" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="harga">Harga</label>
+                <input type="number" name="harga" id="harga" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="keterangan">Keterangan</label>
+                <input type="text" name="keterangan" id="keterangan">
+            </div>
+            
+            <div class="form-group">
+                <label for="pic">PIC</label>
+                <input type="text" name="pic" id="pic" required>
+            </div>
+            
+            <button type="submit" class="btn-submit">Simpan</button>
+        </form>
 
-    <label>ID Barang</label><br>
-    <select name="id_barang" required>
-        <option value="">-- Pilih Barang --</option>
+        <hr>
+
+        <h3>Daftar Barang Keluar</h3>
         <?php
-        $barang = $conn->query("SELECT * FROM barang");
-        while ($row = $barang->fetch_assoc()) {
-            echo "<option value='{$row['id_barang']}'>{$row['id_barang']} - {$row['nama_barang']}</option>";
-        }
+        $query = "SELECT aksi.*, barang.nama_barang 
+                  FROM aksi_barang AS aksi 
+                  JOIN barang AS barang ON aksi.id_barang = barang.id_barang 
+                  WHERE aksi.aksi = 'Keluar' 
+                  ORDER BY aksi.timestamp DESC";
+
+        $data = $conn->query($query);
         ?>
-    </select><br><br>
-
-    <label>Qty</label><br>
-    <input type="number" name="qty" required><br><br>
-
-    <label>Satuan</label><br>
-    <input type="text" name="satuan" required><br><br>
-
-    <label>Harga</label><br>
-    <input type="number" name="harga" required><br><br>
-
-    <label>Keterangan</label><br>
-    <input type="text" name="keterangan"><br><br>
-
-    <label>PIC</label><br>
-    <input type="text" name="pic" required><br><br>
-
-    <button type="submit">Simpan</button>
-</form>
-
-<hr>
-
-<h3>Daftar Barang Keluar</h3>
-<table border="1" cellpadding="5" cellspacing="0">
-    <tr>
-        <th>ID Aksi</th>
-        <th>ID Barang</th>
-        <th>Nama Barang</th>
-        <th>Qty</th>
-        <th>Harga</th>
-        <th>Total</th>
-        <th>Keterangan</th>
-        <th>PIC</th>
-        <th>Waktu</th>
-    </tr>
-
-    <?php
-    $query = "SELECT aksi.*, barang.nama_barang 
-              FROM aksi_barang AS aksi 
-              JOIN barang AS barang ON aksi.id_barang = barang.id_barang 
-              WHERE aksi.aksi = 'Keluar' 
-              ORDER BY aksi.timestamp DESC";
-
-    $data = $conn->query($query);
-
-    while ($row = $data->fetch_assoc()) {
-        echo "<tr>
-                <td>{$row['id_aksi']}</td>
-                <td>{$row['id_barang']}</td>
-                <td>{$row['nama_barang']}</td>
-                <td>{$row['qty']}</td>
-                <td>{$row['harga']}</td>
-                <td>{$row['total_harga']}</td>
-                <td>{$row['keterangan']}</td>
-                <td>{$row['pic']}</td>
-                <td>{$row['timestamp']}</td>
-              </tr>";
-    }
-    ?>
-</table>
+        <?php if ($data->num_rows > 0): ?>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID Aksi</th>
+                    <th>ID Barang</th>
+                    <th>Nama Barang</th>
+                    <th>Qty</th>
+                    <th>Harga</th>
+                    <th>Total</th>
+                    <th>Keterangan</th>
+                    <th>PIC</th>
+                    <th>Waktu</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php while ($row = $data->fetch_assoc()): ?>
+                <tr>
+                    <td data-label="ID Aksi"><?= $row['id_aksi'] ?></td>
+                    <td data-label="ID Barang"><?= $row['id_barang'] ?></td>
+                    <td data-label="Nama Barang"><?= $row['nama_barang'] ?></td>
+                    <td data-label="Qty"><?= $row['qty'] ?></td>
+                    <td data-label="Harga"><?= number_format($row['harga']) ?></td>
+                    <td data-label="Total"><?= number_format($row['total_harga']) ?></td>
+                    <td data-label="Keterangan"><?= $row['keterangan'] ?></td>
+                    <td data-label="PIC"><?= $row['pic'] ?></td>
+                    <td data-label="Waktu"><?= $row['timestamp'] ?></td>
+                </tr>
+                <?php endwhile; ?>
+            </tbody>
+        </table>
+        <?php else: ?>
+            <p class="not-found">Tidak ada data barang keluar ditemukan.</p>
+        <?php endif; ?>
+    </div>
+</body>
+</html>
