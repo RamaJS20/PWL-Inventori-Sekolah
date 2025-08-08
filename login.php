@@ -61,7 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         <div class="right-panel">
             <div class="logo-container">
-                <img src="LOGO STM88.png" alt="Logo STM BB" class="logo">
+                <img src="assets/LOGO STM88.png" alt="Logo STM BB" class="logo">
             </div>
             <div class="login-form-container">
                 <h2>User Log In</h2>
