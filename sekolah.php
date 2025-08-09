@@ -22,11 +22,10 @@ $conn->close();
 
 $team_members = [
     ['name' => 'Rama.js', 'role' => 'Project Manager', 'icon' => 'fas fa-briefcase'],
-    ['name' => 'Caidenrev', 'role' => 'Lead Developer', 'icon' => 'fas fa-code'],
     ['name' => 'Adimas', 'role' => 'UI/UX Designer', 'icon' => 'fas fa-paint-brush'],
-    ['name' => 'Amelia', 'role' => 'Backend Developer', 'icon' => 'fas fa-server'],
+    ['name' => 'Renaldi', 'role' => 'Backend Developer', 'icon' => 'fas fa-server'],
     ['name' => 'Fadil', 'role' => 'Database Admin', 'icon' => 'fas fa-database'],
-    ['name' => 'Ghifari', 'role' => 'Frontend Developer', 'icon' => 'fas fa-laptop-code'],
+    ['name' => 'Putri', 'role' => 'Frontend Developer', 'icon' => 'fas fa-laptop-code'],
     ['name' => 'Imanuel', 'role' => 'Fullstack Developer', 'icon' => 'fas fa-check-double'],
     ['name' => 'Azima', 'role' => 'SQL Key', 'icon' => 'fas fa-pen-nib'],
     ['name' => 'Nadim', 'role' => 'System Analyst', 'icon' => 'fas fa-chart-line'],

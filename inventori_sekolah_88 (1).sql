@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 06, 2025 at 04:50 PM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.0.30
+-- Waktu pembuatan: 08 Agu 2025 pada 13.13
+-- Versi server: 10.4.32-MariaDB
+-- Versi PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,7 +24,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `aksi_barang`
+-- Struktur dari tabel `aksi_barang`
 --
 
 CREATE TABLE `aksi_barang` (
@@ -41,7 +41,7 @@ CREATE TABLE `aksi_barang` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `aksi_barang`
+-- Dumping data untuk tabel `aksi_barang`
 --
 
 INSERT INTO `aksi_barang` (`id_aksi`, `timestamp`, `id_barang`, `qty`, `satuan`, `harga`, `total_harga`, `aksi`, `keterangan`, `pic`) VALUES
@@ -52,7 +52,7 @@ INSERT INTO `aksi_barang` (`id_aksi`, `timestamp`, `id_barang`, `qty`, `satuan`,
 -- --------------------------------------------------------
 
 --
--- Table structure for table `barang`
+-- Struktur dari tabel `barang`
 --
 
 CREATE TABLE `barang` (
@@ -63,7 +63,7 @@ CREATE TABLE `barang` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `barang`
+-- Dumping data untuk tabel `barang`
 --
 
 INSERT INTO `barang` (`id_barang`, `nama_barang`, `deskripsi`, `satuan_unit`) VALUES
@@ -76,7 +76,7 @@ INSERT INTO `barang` (`id_barang`, `nama_barang`, `deskripsi`, `satuan_unit`) VA
 -- --------------------------------------------------------
 
 --
--- Table structure for table `user`
+-- Struktur dari tabel `user`
 --
 
 CREATE TABLE `user` (
@@ -86,28 +86,36 @@ CREATE TABLE `user` (
   `password` varchar(255) NOT NULL,
   `email` varchar(100) NOT NULL,
   `no_hp` varchar(15) NOT NULL,
-  `status` enum('admin','user') NOT NULL
+  `status` enum('admin','user') NOT NULL,
+  `profile_pic` varchar(255) DEFAULT 'default-user.png'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data untuk tabel `user`
+--
+
+INSERT INTO `user` (`id_user`, `username`, `nama`, `password`, `email`, `no_hp`, `status`, `profile_pic`) VALUES
+(1, 'caidenrev', 'Eka Revandi', '$2y$10$H1iKDIjTgMZ5uGI9KgGtJ.hj5aoWccvSfi5nwE79PqhmnzOUdk/ia', 'caideneka@gmail.com', '08886340076', 'user', 'profile_6895b8104b07a.jpg');
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indexes for table `aksi_barang`
+-- Indeks untuk tabel `aksi_barang`
 --
 ALTER TABLE `aksi_barang`
   ADD PRIMARY KEY (`id_aksi`),
   ADD KEY `id_barang` (`id_barang`);
 
 --
--- Indexes for table `barang`
+-- Indeks untuk tabel `barang`
 --
 ALTER TABLE `barang`
   ADD PRIMARY KEY (`id_barang`);
 
 --
--- Indexes for table `user`
+-- Indeks untuk tabel `user`
 --
 ALTER TABLE `user`
   ADD PRIMARY KEY (`id_user`),
@@ -115,21 +123,21 @@ ALTER TABLE `user`
   ADD UNIQUE KEY `email` (`email`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT untuk tabel yang dibuang
 --
 
 --
--- AUTO_INCREMENT for table `user`
+-- AUTO_INCREMENT untuk tabel `user`
 --
 ALTER TABLE `user`
-  MODIFY `id_user` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id_user` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- Constraints for dumped tables
+-- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
 --
 
 --
--- Constraints for table `aksi_barang`
+-- Ketidakleluasaan untuk tabel `aksi_barang`
 --
 ALTER TABLE `aksi_barang`
   ADD CONSTRAINT `aksi_barang_ibfk_1` FOREIGN KEY (`id_barang`) REFERENCES `barang` (`id_barang`);
