@@ -150,9 +150,7 @@ $conn->close();
                     <li class="menu-item">
                         <a href="sekolah.php"><i class="fa-solid fa-school"></i>Tentang Sekolah</a>
                     </li>
-                    <li class="menu-item">
-                        <a href="#"><i class="fas fa-file-alt"></i>Report</a>
-                    </li>
+                    
                 </ul>
             </nav>
             <div class="sidebar-footer">
@@ -167,7 +165,7 @@ $conn->close();
                     <span class="breadcrumb">Pengaturan Profil</span>
                 </div>
                 <div class="top-bar-right">
-                    <a href="#" class="icon-link"><i class="fas fa-bell"></i></a>
+                    
                     <a href="#" class="icon-link" title="Pengaturan Profil"><i class="fas fa-cog"></i></a>
                     <div class="user-profile">
                         <span><?= htmlspecialchars($user['nama']) ?></span>

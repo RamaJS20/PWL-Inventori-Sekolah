@@ -30,7 +30,7 @@ $users_data = $conn->query($users_query);
                     <span class="breadcrumb">Manajemen User</span>
                 </div>
                 <div class="top-bar-right">
-                    <a href="#" class="icon-link"><i class="fas fa-bell"></i></a>
+                    
                     <a href="#" class="icon-link"><i class="fas fa-cog"></i></a>
                     <div class="user-profile">
                         <span><?php echo htmlspecialchars($_SESSION['username']); ?></span>

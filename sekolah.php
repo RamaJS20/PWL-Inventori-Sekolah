@@ -21,14 +21,14 @@ $stmt_user->close();
 $conn->close();
 
 $team_members = [
-    ['name' => 'Rama.js', 'role' => 'Project Manager', 'icon' => 'fas fa-briefcase'],
-    ['name' => 'Adimas', 'role' => 'UI/UX Designer', 'icon' => 'fas fa-paint-brush'],
-    ['name' => 'Renaldi', 'role' => 'Backend Developer', 'icon' => 'fas fa-server'],
-    ['name' => 'Fadil', 'role' => 'Database Admin', 'icon' => 'fas fa-database'],
+    ['name' => 'Rama Jaka Surya', 'role' => 'Database', 'icon' => 'fas fa-briefcase'],
+    ['name' => 'Adimas Permana', 'role' => 'Frontend Developer', 'icon' => 'fas fa-paint-brush'],
+    ['name' => 'Renaldi', 'role' => 'UI/UX Designer', 'icon' => 'fas fa-server'],
+    ['name' => 'Muhamad Fadilah', 'role' => 'UI/UX Designer', 'icon' => 'fas fa-database'],
     ['name' => 'Putri', 'role' => 'Frontend Developer', 'icon' => 'fas fa-laptop-code'],
-    ['name' => 'Imanuel', 'role' => 'Fullstack Developer', 'icon' => 'fas fa-check-double'],
-    ['name' => 'Azima', 'role' => 'SQL Key', 'icon' => 'fas fa-pen-nib'],
-    ['name' => 'Nadim', 'role' => 'System Analyst', 'icon' => 'fas fa-chart-line'],
+    ['name' => 'Imanuel Antonio Putra', 'role' => 'Fullstack Developer', 'icon' => 'fas fa-check-double'],
+    ['name' => 'Muhamad Fauzan Azzima', 'role' => 'Frontend Developer', 'icon' => 'fas fa-pen-nib'],
+    ['name' => 'Mohammad Hibban Nadim', 'role' => 'Database', 'icon' => 'fas fa-chart-line'],
 ];
 
 ?>
@@ -81,9 +81,7 @@ $team_members = [
                     <li class="menu-item active">
                         <a href="sekolah.php"><i class="fa-solid fa-school"></i>Tentang Sekolah</a>
                     </li>
-                    <li class="menu-item">
-                        <a href="#"><i class="fas fa-file-alt"></i>Report</a>
-                    </li>
+                    
                 </ul>
             </nav>
             <div class="sidebar-footer">
@@ -98,7 +96,7 @@ $team_members = [
                     <span class="breadcrumb">TENTANG SEKOLAH</span>
                 </div>
                 <div class="top-bar-right">
-                    <a href="#" class="icon-link"><i class="fas fa-bell"></i></a>
+                    
                     <a href="profile.php" class="icon-link" title="Pengaturan Profil"><i class="fas fa-cog"></i></a>
                     <div class="user-profile">
                         <span><?php echo htmlspecialchars($user_data['nama']); ?></span>
